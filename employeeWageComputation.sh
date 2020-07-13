@@ -1,6 +1,6 @@
 
 #!/bin/bash -x
-echo "Welcome to UC7 - Add functions"
+echo "Welcome to UC8 - Add dailywage and store in array"
 
 Is_Fulltime=1
 Is_Parttime=2
@@ -26,12 +26,22 @@ function getWorkingHours(){
 }
 
 
+function calcDailyWage(){
+	local workHours=$1
+	wage=$(( $workHours*$Emp_Rate_Per_Hr ))
+	echo $wage
+
+
+}
+
 while [[ $totalEmpHr -lt $Max_Hrs_IN_Month && $totalWorkingDays -lt $Num_Working_Days ]]
 do
 	((totalWorkingDays++))
 	workHours="$( getWorkingHours $((RANDOM%3)) )"
+	dailywage[$totalWorkingDays]="$( calcDailyWage $workHours )"
 	totalEmpHr=$(($totalEmpHr+$workHours))
 done
 totalSalary=$(($totalEmpHr*$Emp_Rate_Per_Hr))
 
 echo $totalSalary "is salary of employee "
+echo "Daily wage of employee is "${dailywage[@]}

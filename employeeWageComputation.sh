@@ -1,26 +1,32 @@
 
 #!/bin/bash -x
+echo "Welcome to UC6 - Add another condition of max hours"
+Is_Fulltime=1
+Is_Parttime=2
+Max_Hrs_IN_Month=100
+Emp_Rate_Per_Hr=20
+Num_Working_Days=20
 
-echo "Welcome to UC5 calculate wage for month"
-isfulltime=1
-isparttime=2
+
 totalSalary=0
-numWorkingDays=20
+totalEmpHr=0
+totalWorkingDays=0
 
-empRatePerHr=20
-for((day=1;day<=$numWorkingDays;day++))
+
+while [[ $totalEmpHr -lt $Max_Hrs_IN_Month && $totalWorkingDays -lt $Num_Working_Days ]]
 do
+	((totalWorkingDays++))
 	empcheck=$(( RANDOM%3 ))
 	case $empcheck in
-		$isparttime)
+		$Is_Fulltime)
 		emphrs=4 ;;
-
-		$isfulltime)
+		$Is_Parttime)
 		emphrs=8 ;;
 		*)
 		emphrs=0 ;;
 	esac
-	salary=$(( $emphrs*$empRatePerHr ))
-	totalSalary=$(($totalSalary+$salary))
+	totalEmpHr=$(($totalEmpHr+$emphrs))
 done
+totalSalary=$(($totalEmpHr*$Emp_Rate_Per_Hr))
+
 echo $totalSalary "is salary of employee "

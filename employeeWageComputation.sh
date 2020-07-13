@@ -1,22 +1,20 @@
 
 #!/bin/bash -x
 
-echo "Welcome to UC3 Add part-time"
-ispresent=1
+echo "Welcome to UC4 Add case statement"
+isfulltime=1
 isparttime=2
-randomcheck=$(( RANDOM%3 ))
-emprate=20
+empcheck=$(( RANDOM%3 ))
+empRatePerHr=20
 
-if [ $ispresent -eq $randomcheck ]
-then
-	emphrs=8
-elif [ $isparttime -eq $randomcheck ]
-then
-	emphrs=4
-else
-	emphrs=0
-fi
-
-salary=$(( emphrs*emprate ))
+case $empcheck in
+	$isparttime)
+	emphrs=4 ;;
+	$isfulltime)
+	emphrs=8 ;;
+	*)
+	emphrs=0 ;;
+esac
+salary=$(( emphrs*empRatePerHr))
 
 echo $salary "is salary of employee "

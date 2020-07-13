@@ -1,6 +1,7 @@
 
 #!/bin/bash -x
-echo "Welcome to UC8 - Add dailywage and store in array"
+echo "Welcome to UC9 - Add Dictonary and store day and total wage"
+declare -A dailywage
 
 Is_Fulltime=1
 Is_Parttime=2
@@ -38,10 +39,27 @@ while [[ $totalEmpHr -lt $Max_Hrs_IN_Month && $totalWorkingDays -lt $Num_Working
 do
 	((totalWorkingDays++))
 	workHours="$( getWorkingHours $((RANDOM%3)) )"
-	dailywage[$totalWorkingDays]="$( calcDailyWage $workHours )"
+	dailywage["Day_$totalWorkingDays"]="$( calcDailyWage $workHours )"
 	totalEmpHr=$(($totalEmpHr+$workHours))
 done
-totalSalary=$(($totalEmpHr*$Emp_Rate_Per_Hr))
+totalSalary="$( calcDailyWage $totalEmpHr )"
+dailywage["totalSalary"]=$totalSalary
 
-echo $totalSalary "is salary of employee "
+#echo $totalSalary "is total salary of employee "
+echo
 echo "Daily wage of employee is "${dailywage[@]}
+echo "Daily wage of employee is "${!dailywage[@]}
+echo
+echo
+for key in ${!dailywage[@]}
+do
+	if [ $key != "totalSalary" ]
+	then
+		echo "Daily Wage of employee for day $key is " ${dailywage[$key]}
+	else
+		echo
+		echo "Total Wage of employee is " ${dailywage[$key]}
+		echo
+	fi
+
+done
